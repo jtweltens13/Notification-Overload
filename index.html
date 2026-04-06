@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Work Demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <main class="workspace panel" data-active-tab="draft">
+        <div class="tab-row">
+          <div class="window-controls" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <button class="tab-button active" data-tab="draft" type="button">
+            Paper Draft
+          </button>
+          <button class="tab-button" data-tab="source" type="button">
+            Source Article
+          </button>
+          <button class="tab-button" data-tab="notes" type="button">
+            Notes
+          </button>
+        </div>
+
+        <div class="browser-bar">
+          <div class="browser-nav">
+            <span class="nav-button">&#8249;</span>
+            <span class="nav-button">&#8250;</span>
+            <span class="nav-button">&#8635;</span>
+          </div>
+          <div class="address-bar" id="addressBar">docs.google.com/document/d/college-football-draft</div>
+          <div class="workspace-actions">
+            <div class="session-status" id="sessionStatus"></div>
+            <button class="inbox-button" id="openInboxButton" type="button">
+              Notifications
+            </button>
+          </div>
+        </div>
+
+        <div class="docs-toolbar">
+          <div class="docs-menu-row">
+            <span>File</span>
+            <span>Edit</span>
+            <span>View</span>
+            <span>Insert</span>
+            <span>Format</span>
+            <span>Tools</span>
+            <span>Extensions</span>
+            <span>Help</span>
+          </div>
+          <div class="docs-controls-row">
+            <span class="toolbar-pill">100%</span>
+            <span class="toolbar-pill">Arial</span>
+            <span class="toolbar-pill">11</span>
+            <span class="toolbar-icon">B</span>
+            <span class="toolbar-icon italic">I</span>
+            <span class="toolbar-icon">U</span>
+            <span class="toolbar-divider"></span>
+            <span class="toolbar-icon">A</span>
+            <span class="toolbar-icon">+</span>
+            <span class="toolbar-icon">1.15</span>
+          </div>
+        </div>
+
+        <div class="tab-panels">
+          <section class="tab-panel active" data-panel="draft">
+            <div class="document-card full-height-card">
+              <label class="field-label" for="paperTitle">Working title</label>
+              <input
+                id="paperTitle"
+                class="title-input"
+                type="text"
+                value="How College Football Reshapes Campus Identity and Tradition"
+              />
+              <label class="field-label" for="paperDraft">Draft</label>
+              <textarea id="paperDraft" class="editor">
+College football is more than a weekend event on many campuses. It affects school identity, alumni engagement, local business activity, and even how students describe their sense of belonging. In this paper, I want to argue that college football operates as both a sports entertainment product and a social ritual that shapes campus culture.
+
+One section should focus on tradition. Marching bands, student sections, rivalry trophies, and tailgates all turn a game into a shared public performance. These repeated rituals matter because they connect new students to older campus stories.
+
+I still need to add examples about NIL debates, television money, conference realignment, and whether football culture unifies students or crowds out other parts of campus life.
+              </textarea>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="source">
+            <div class="reading-card">
+              <p class="reading-label">Open reading</p>
+              <h2>College football as campus culture</h2>
+              <p>
+                College football functions as a cultural anchor at many
+                universities. It creates rituals that shape student identity,
+                alumni memory, and the public image of the school.
+              </p>
+              <p>
+                For many students, the football season becomes one of the first
+                ways they learn how campus communities tell stories about
+                themselves. Traditions such as marching-band entrances, student
+                section chants, and rivalry week imagery create a shared sense
+                of participation even for students who are not regular sports
+                fans. The game becomes a stage on which the university performs
+                its values, history, and regional character.
+              </p>
+              <blockquote>
+                A Saturday game day often compresses school pride, regional
+                history, music, clothing, and community into a single shared
+                event that students remember long after graduation.
+              </blockquote>
+              <p>
+                At the same time, the growth of media revenue, conference
+                realignment, and athlete branding has made college football a
+                contested space where tradition and commercialization coexist.
+              </p>
+              <p>
+                This tension appears clearly in debates about conference
+                realignment. When universities move to larger leagues for media
+                exposure and revenue, they often gain financial security and a
+                wider national audience. But those same moves can weaken older
+                regional rivalries that once gave meaning to the season for
+                students, alumni, and local communities. What looks like a smart
+                business decision from an administrative perspective may feel
+                like a cultural loss from the perspective of fans.
+              </p>
+              <p>
+                Name, image, and likeness policies have added another layer to
+                this transformation. Supporters of NIL argue that athletes should
+                be compensated for the value they create, especially in a sport
+                that generates enormous revenue for schools, broadcasters, and
+                sponsors. Critics worry that increased commercialization changes
+                how fans interpret loyalty, team identity, and the relationship
+                between athletes and institutions. In practice, NIL has made the
+                college game look more openly connected to market forces than it
+                did in earlier eras.
+              </p>
+              <p>
+                Still, the emotional power of college football remains rooted in
+                place. Students gather in dorm rooms to watch away games,
+                families travel back to campus for homecoming weekends, and
+                alumni use football weekends as reasons to reconnect with each
+                other and with the university. These experiences give the sport
+                cultural durability. Even when policies, conferences, or media
+                arrangements change, the rituals around the game continue to
+                shape how people imagine belonging to a college community.
+              </p>
+              <p>
+                For that reason, college football can be studied as more than an
+                athletic contest. It is also an institutional symbol, a revenue
+                engine, a public performance, and a site of ongoing debate about
+                identity, equity, and tradition. Any argument about its role on
+                campus should account for both its unifying power and the ways
+                it can overshadow other priorities within university life.
+              </p>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="notes">
+            <div class="document-card full-height-card">
+              <label class="field-label" for="researchNotes">Research notes</label>
+              <textarea id="researchNotes" class="editor small">
+- Opening claim: college football acts like a public ritual for campus identity.
+- Include rivalry games, marching bands, and tailgates as tradition examples.
+- Counterpoint: revenue and conference realignment can weaken local identity.
+- Add a paragraph on NIL and how athlete visibility changes the meaning of fandom.
+              </textarea>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <aside class="inbox-drawer" id="inboxDrawer" aria-hidden="true">
+      <div class="drawer-topbar">
+        <div>
+          <h2>Notifications</h2>
+        </div>
+        <button id="closeInboxButton" class="icon-button" type="button">Close</button>
+      </div>
+      <div class="inbox-tabs">
+        <button id="unreadTabButton" class="inbox-tab-button active" type="button">
+          Unread
+        </button>
+        <button id="readTabButton" class="inbox-tab-button" type="button">
+          Read
+        </button>
+      </div>
+      <div class="drawer-list" id="inboxList"></div>
+      <div class="drawer-actions">
+        <button id="openPriorityButton" class="secondary-button" type="button">
+          Priorities
+        </button>
+        <button id="restartDemoButton" class="secondary-button" type="button">
+          Restart demo
+        </button>
+      </div>
+    </aside>
+
+    <section class="priority-panel" id="priorityPanel" aria-hidden="true">
+      <div class="priority-topbar">
+        <div>
+          <p class="eyebrow">Student controls</p>
+          <h2>Priorities</h2>
+        </div>
+        <button id="closePriorityButton" class="icon-button" type="button">Close</button>
+      </div>
+
+      <label class="control-row">
+        <span>Deadlines due soon</span>
+        <input id="deadlineToggle" type="checkbox" checked />
+      </label>
+
+      <label class="control-row">
+        <span>Instructor or advisor messages</span>
+        <input id="peopleToggle" type="checkbox" checked />
+      </label>
+
+      <label class="control-row">
+        <span>Schedule or room changes</span>
+        <input id="scheduleToggle" type="checkbox" checked />
+      </label>
+
+      <p class="field-label">Apps allowed to break through</p>
+
+      <label class="control-row">
+        <span>Canvas</span>
+        <input id="canvasToggle" type="checkbox" checked />
+      </label>
+
+      <label class="control-row">
+        <span>Email</span>
+        <input id="emailToggle" type="checkbox" checked />
+      </label>
+
+      <label class="control-row">
+        <span>Registrar</span>
+        <input id="registrarToggle" type="checkbox" checked />
+      </label>
+
+      <label class="field-label" for="windowSelect">Urgent deadline window</label>
+      <select id="windowSelect">
+        <option value="6">Within 6 hours</option>
+        <option value="12">Within 12 hours</option>
+        <option value="24" selected>Within 24 hours</option>
+        <option value="48">Within 48 hours</option>
+      </select>
+    </section>
+
+    <section class="start-modal" id="startModal" aria-hidden="false">
+      <div class="start-card">
+        <button id="startDemoButton" class="primary-button" type="button">
+          Start Demo
+        </button>
+      </div>
+    </section>
+
+    <div class="toast-region" id="toastRegion"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
