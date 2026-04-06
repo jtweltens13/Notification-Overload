@@ -1,27 +1,15 @@
 const demoNotifications = [
   {
-    title: "Canvas Reminder: Optional Discussion Post This Weekend",
-    body: "Useful course activity, but it does not require an immediate interruption.",
+    title: "LinkedIn: 3 alumni from your university viewed your profile",
+    body: "Useful career context, but not urgent while the student is focused on writing.",
     type: "general",
-    source: "Canvas",
+    source: "LinkedIn",
   },
   {
-    title: "Library Email: Citation Workshop Tomorrow",
-    body: "Helpful, but not urgent while the student is focused on writing.",
+    title: "LinkedIn: New post about sports media internships in your network",
+    body: "Potentially interesting professional news that can wait in the inbox.",
     type: "general",
-    source: "Email",
-  },
-  {
-    title: "Writing Center: Peer Review Slots Still Open This Week",
-    body: "Appointments are available if you want extra feedback on your draft.",
-    type: "general",
-    source: "Email",
-  },
-  {
-    title: "Campus Bookstore: Football Jersey Sale Ends Friday",
-    body: "A promotion message tied to game week merchandise.",
-    type: "general",
-    source: "Email",
+    source: "LinkedIn",
   },
   {
     title: "Professor Lin: Paper Deadline Moved to Tomorrow at Noon",
@@ -49,6 +37,30 @@ const demoNotifications = [
     source: "Canvas",
   },
   {
+    title: "Canvas Reminder: Optional Discussion Post This Weekend",
+    body: "Useful course activity, but it does not require an immediate interruption.",
+    type: "general",
+    source: "Canvas",
+  },
+  {
+    title: "Library Email: Citation Workshop Tomorrow",
+    body: "Helpful, but not urgent while the student is focused on writing.",
+    type: "general",
+    source: "Email",
+  },
+  {
+    title: "Writing Center: Peer Review Slots Still Open This Week",
+    body: "Appointments are available if you want extra feedback on your draft.",
+    type: "general",
+    source: "Email",
+  },
+  {
+    title: "Campus Bookstore: Football Jersey Sale Ends Friday",
+    body: "A promotion message tied to game week merchandise.",
+    type: "general",
+    source: "Email",
+  },
+  {
     title: "Recreation Center: Intramural Flag Football Standings Updated",
     body: "Your residence hall team moved up one spot this week.",
     type: "general",
@@ -62,6 +74,7 @@ const state = {
   inboxOpen: false,
   prioritiesOpen: false,
   notifications: [],
+  notificationQueue: [],
   toasts: [],
   nextId: 1,
   demoStarted: false,
@@ -76,6 +89,7 @@ const state = {
     canvas: true,
     email: true,
     registrar: true,
+    linkedin: true,
     deadlineWindow: 24,
   },
 };
@@ -84,6 +98,7 @@ const sourceSettings = {
   Canvas: "canvas",
   Email: "email",
   Registrar: "registrar",
+  LinkedIn: "linkedin",
 };
 
 const tabRoutes = {
@@ -97,9 +112,6 @@ const tabUrls = {
   source: "campus-journal.edu/articles/college-football-as-campus-culture",
   notes: "keep.google.com/u/0/#NOTE/football-paper-research",
 };
-
-const initialDraftValue = document.querySelector("#paperDraft").value;
-const initialTitleValue = document.querySelector("#paperTitle").value;
 
 const elements = {
   workspace: document.querySelector(".workspace"),
@@ -115,7 +127,6 @@ const elements = {
   priorityPanel: document.querySelector("#priorityPanel"),
   startModal: document.querySelector("#startModal"),
   startDemoButton: document.querySelector("#startDemoButton"),
-  restartDemoButton: document.querySelector("#restartDemoButton"),
   toastRegion: document.querySelector("#toastRegion"),
   sessionStatus: document.querySelector("#sessionStatus"),
   paperTitle: document.querySelector("#paperTitle"),
@@ -125,6 +136,7 @@ const elements = {
   canvasToggle: document.querySelector("#canvasToggle"),
   emailToggle: document.querySelector("#emailToggle"),
   registrarToggle: document.querySelector("#registrarToggle"),
+  linkedinToggle: document.querySelector("#linkedinToggle"),
   windowSelect: document.querySelector("#windowSelect"),
   paperDraft: document.querySelector("#paperDraft"),
   tabButtons: Array.from(document.querySelectorAll("[data-tab]")),
@@ -178,7 +190,6 @@ function bindEvents() {
   });
 
   elements.startDemoButton.addEventListener("click", startDemo);
-  elements.restartDemoButton.addEventListener("click", restartDemo);
 
   elements.deadlineToggle.addEventListener("change", (event) => {
     state.settings.deadlines = event.target.checked;
@@ -207,6 +218,11 @@ function bindEvents() {
 
   elements.registrarToggle.addEventListener("change", (event) => {
     state.settings.registrar = event.target.checked;
+    render();
+  });
+
+  elements.linkedinToggle.addEventListener("change", (event) => {
+    state.settings.linkedin = event.target.checked;
     render();
   });
 
@@ -248,6 +264,7 @@ function startDemo() {
   state.demoStarted = true;
   state.activeTab = "draft";
   state.notifications = [];
+  state.notificationQueue = buildNotificationQueue();
   state.toasts = [];
   state.nextId = 1;
   state.nextNotificationIndex = 0;
@@ -263,23 +280,36 @@ function startDemo() {
   elements.paperDraft.focus();
 }
 
-function restartDemo() {
-  state.demoStarted = false;
-  state.activeTab = "draft";
-  state.notifications = [];
-  state.toasts = [];
-  state.nextId = 1;
-  state.nextNotificationIndex = 0;
-  state.nextTriggerAt = 20;
-  state.maxTypedDelta = 0;
-  state.inboxOpen = false;
-  state.inboxTab = "unread";
-  state.prioritiesOpen = false;
-  elements.paperDraft.value = initialDraftValue;
-  elements.paperTitle.value = initialTitleValue;
-  elements.startModal.classList.remove("hidden");
-  elements.startModal.setAttribute("aria-hidden", "false");
-  render();
+function buildNotificationQueue() {
+  const lowPriorityNotifications = shuffleNotifications(
+    demoNotifications.filter((notification) => notification.type === "general")
+  );
+  const highPriorityNotifications = shuffleNotifications(
+    demoNotifications.filter((notification) => notification.type !== "general")
+  );
+
+  const openingNotifications = [
+    ...lowPriorityNotifications.slice(0, 2),
+    ...highPriorityNotifications.slice(0, 1),
+  ];
+
+  const remainingNotifications = shuffleNotifications([
+    ...lowPriorityNotifications.slice(2),
+    ...highPriorityNotifications.slice(1),
+  ]);
+
+  return [...openingNotifications, ...remainingNotifications];
+}
+
+function shuffleNotifications(notifications) {
+  const shuffled = [...notifications];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+
+  return shuffled;
 }
 
 function handleDraftInput() {
@@ -291,10 +321,10 @@ function handleDraftInput() {
   state.maxTypedDelta = Math.max(state.maxTypedDelta, typedDelta);
 
   while (
-    state.nextNotificationIndex < demoNotifications.length &&
+    state.nextNotificationIndex < state.notificationQueue.length &&
     state.maxTypedDelta >= state.nextTriggerAt
   ) {
-    receiveNotification(demoNotifications[state.nextNotificationIndex]);
+    receiveNotification(state.notificationQueue[state.nextNotificationIndex]);
     state.nextNotificationIndex += 1;
     state.nextTriggerAt += 20;
   }
@@ -405,6 +435,7 @@ function renderControls() {
   elements.canvasToggle.checked = state.settings.canvas;
   elements.emailToggle.checked = state.settings.email;
   elements.registrarToggle.checked = state.settings.registrar;
+  elements.linkedinToggle.checked = state.settings.linkedin;
   elements.windowSelect.value = String(state.settings.deadlineWindow);
 }
 
@@ -414,8 +445,8 @@ function renderStatus() {
     return;
   }
 
-  if (state.nextNotificationIndex >= demoNotifications.length) {
-    elements.sessionStatus.textContent = "All demo notifications have arrived. Keep writing or review missed notifications.";
+  if (state.nextNotificationIndex >= state.notificationQueue.length) {
+    elements.sessionStatus.textContent = "";
     return;
   }
 

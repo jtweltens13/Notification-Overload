@@ -38,7 +38,7 @@ Notifications are marked as important when they match the current settings:
 - `Deadlines due soon` only interrupts when the message is a deadline and its `dueHours` value is within the selected urgent deadline window.
 - `Instructor or advisor messages` interrupts person-to-person messages.
 - `Schedule or room changes` interrupts schedule-related updates.
-- Source toggles for `Canvas`, `Email`, and `Registrar` decide whether messages from those channels are allowed to break through.
+- Source toggles for `Canvas`, `Email`, `Registrar`, and `LinkedIn` decide whether messages from those channels are allowed to break through.
 
 All other notifications are delivered to the inbox without an interrupting toast.
 
@@ -69,7 +69,7 @@ Then open `http://localhost:8000`.
 ## Interaction Details
 
 - The app starts in a blocked state behind a `Start Demo` modal.
-- Restarting the demo resets the draft text, title, notifications, toast stack, and progress.
+- Reloading the page resets the draft, notifications, toast stack, and progress.
 - The active workspace tab is mirrored in the URL hash so the prototype can deep-link to a tab state.
 - The layout includes responsive adjustments for narrower screens.
 

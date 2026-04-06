@@ -69,7 +69,7 @@
         <div class="tab-panels">
           <section class="tab-panel active" data-panel="draft">
             <div class="document-card full-height-card">
-              <label class="field-label" for="paperTitle">Working title</label>
+              <label class="field-label" for="paperTitle">Title</label>
               <input
                 id="paperTitle"
                 class="title-input"
@@ -192,60 +192,123 @@ I still need to add examples about NIL debates, television money, conference rea
         <button id="openPriorityButton" class="secondary-button" type="button">
           Priorities
         </button>
-        <button id="restartDemoButton" class="secondary-button" type="button">
-          Restart demo
-        </button>
       </div>
     </aside>
 
     <section class="priority-panel" id="priorityPanel" aria-hidden="true">
       <div class="priority-topbar">
         <div>
-          <p class="eyebrow">Student controls</p>
-          <h2>Priorities</h2>
+          <h2>Focus priorities</h2>
+          <p class="priority-subtitle">Choose what deserves an interruption while you work.</p>
         </div>
         <button id="closePriorityButton" class="icon-button" type="button">Close</button>
       </div>
+      <div class="priority-section">
+        <div class="priority-section-head">
+          <p class="priority-section-label">Break through now</p>
+          <p class="priority-section-copy">These categories can interrupt your writing session.</p>
+        </div>
 
-      <label class="control-row">
-        <span>Deadlines due soon</span>
-        <input id="deadlineToggle" type="checkbox" checked />
-      </label>
+        <label class="control-row">
+          <span class="control-copy">
+            <span class="control-title">Deadlines due soon</span>
+            <span class="control-description">Surface time-sensitive due date changes before they get missed.</span>
+          </span>
+          <span class="switch">
+            <input id="deadlineToggle" type="checkbox" checked />
+            <span class="switch-ui" aria-hidden="true"></span>
+          </span>
+        </label>
 
-      <label class="control-row">
-        <span>Instructor or advisor messages</span>
-        <input id="peopleToggle" type="checkbox" checked />
-      </label>
+        <label class="control-row">
+          <span class="control-copy">
+            <span class="control-title">Instructor or advisor messages</span>
+            <span class="control-description">Allow direct messages from people to interrupt immediately.</span>
+          </span>
+          <span class="switch">
+            <input id="peopleToggle" type="checkbox" checked />
+            <span class="switch-ui" aria-hidden="true"></span>
+          </span>
+        </label>
 
-      <label class="control-row">
-        <span>Schedule or room changes</span>
-        <input id="scheduleToggle" type="checkbox" checked />
-      </label>
+        <label class="control-row">
+          <span class="control-copy">
+            <span class="control-title">Schedule or room changes</span>
+            <span class="control-description">Catch location updates and scheduling changes in real time.</span>
+          </span>
+          <span class="switch">
+            <input id="scheduleToggle" type="checkbox" checked />
+            <span class="switch-ui" aria-hidden="true"></span>
+          </span>
+        </label>
+      </div>
 
-      <p class="field-label">Apps allowed to break through</p>
+      <div class="priority-section">
+        <div class="priority-section-head">
+          <p class="priority-section-label">Allowed apps</p>
+          <p class="priority-section-copy">Only these sources may send interrupting alerts.</p>
+        </div>
 
-      <label class="control-row">
-        <span>Canvas</span>
-        <input id="canvasToggle" type="checkbox" checked />
-      </label>
+        <label class="control-row">
+          <span class="control-copy">
+            <span class="control-title">Canvas</span>
+            <span class="control-description">Course updates, assignments, and LMS announcements.</span>
+          </span>
+          <span class="switch">
+            <input id="canvasToggle" type="checkbox" checked />
+            <span class="switch-ui" aria-hidden="true"></span>
+          </span>
+        </label>
 
-      <label class="control-row">
-        <span>Email</span>
-        <input id="emailToggle" type="checkbox" checked />
-      </label>
+        <label class="control-row">
+          <span class="control-copy">
+            <span class="control-title">Email</span>
+            <span class="control-description">General email messages that match your priority rules.</span>
+          </span>
+          <span class="switch">
+            <input id="emailToggle" type="checkbox" checked />
+            <span class="switch-ui" aria-hidden="true"></span>
+          </span>
+        </label>
 
-      <label class="control-row">
-        <span>Registrar</span>
-        <input id="registrarToggle" type="checkbox" checked />
-      </label>
+        <label class="control-row">
+          <span class="control-copy">
+            <span class="control-title">Registrar</span>
+            <span class="control-description">Official registration and room change notifications.</span>
+          </span>
+          <span class="switch">
+            <input id="registrarToggle" type="checkbox" checked />
+            <span class="switch-ui" aria-hidden="true"></span>
+          </span>
+        </label>
 
-      <label class="field-label" for="windowSelect">Urgent deadline window</label>
-      <select id="windowSelect">
-        <option value="6">Within 6 hours</option>
-        <option value="12">Within 12 hours</option>
-        <option value="24" selected>Within 24 hours</option>
-        <option value="48">Within 48 hours</option>
-      </select>
+        <label class="control-row">
+          <span class="control-copy">
+            <span class="control-title">LinkedIn</span>
+            <span class="control-description">Career networking updates and professional activity notifications.</span>
+          </span>
+          <span class="switch">
+            <input id="linkedinToggle" type="checkbox" checked />
+            <span class="switch-ui" aria-hidden="true"></span>
+          </span>
+        </label>
+      </div>
+
+      <div class="priority-section priority-field">
+        <label class="field-label priority-field-label" for="windowSelect">Urgent deadline window</label>
+        <div class="select-shell">
+          <select id="windowSelect">
+            <option value="6">Within 6 hours</option>
+            <option value="12">Within 12 hours</option>
+            <option value="24" selected>Within 24 hours</option>
+            <option value="48">Within 48 hours</option>
+          </select>
+          <span class="select-caret" aria-hidden="true">&#9662;</span>
+        </div>
+        <p class="priority-helper">Deadline alerts only break through if they fall inside this window.</p>
+      </div>
+
+      <p class="priority-note">Changes apply immediately to incoming notifications.</p>
     </section>
 
     <section class="start-modal" id="startModal" aria-hidden="false">

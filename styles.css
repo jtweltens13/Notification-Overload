@@ -458,8 +458,12 @@ blockquote {
 }
 
 .priority-panel {
-  width: min(360px, calc(100vw - 32px));
+  width: min(420px, calc(100vw - 32px));
   z-index: 26;
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+  background: linear-gradient(180deg, #f8fbff 0%, #eef3ff 100%);
 }
 
 .eyebrow {
@@ -470,12 +474,191 @@ blockquote {
   color: var(--blue);
 }
 
+.priority-topbar {
+  align-items: flex-start;
+}
+
+.priority-topbar h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.priority-subtitle {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.priority-intro,
+.priority-section {
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(26, 115, 232, 0.12);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 10px 24px rgba(26, 56, 110, 0.08);
+}
+
+.priority-intro {
+  background: linear-gradient(135deg, #173f9e 0%, #1a73e8 100%);
+  color: #fff;
+}
+
+.priority-intro-label,
+.priority-section-label {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.priority-intro-copy {
+  margin: 10px 0 0;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.priority-section-head {
+  margin-bottom: 12px;
+}
+
+.priority-section-copy {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .control-row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 12px;
-  margin: 14px 0;
+  gap: 14px;
+  margin: 0;
+  padding: 14px 0;
+}
+
+.control-row + .control-row {
+  border-top: 1px solid rgba(32, 33, 36, 0.08);
+}
+
+.control-copy {
+  display: grid;
+  gap: 4px;
+}
+
+.control-title {
+  font-weight: 600;
+}
+
+.control-description {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.switch {
+  position: relative;
+  width: 52px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.switch-ui {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: #c7d2e5;
+  box-shadow: inset 0 0 0 1px rgba(32, 33, 36, 0.08);
+  transition: background 160ms ease;
+}
+
+.switch-ui::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(20, 44, 110, 0.18);
+  transition: transform 160ms ease;
+}
+
+.switch input:checked + .switch-ui {
+  background: linear-gradient(135deg, #174ea6 0%, #1a73e8 100%);
+}
+
+.switch input:checked + .switch-ui::after {
+  transform: translateX(20px);
+}
+
+.switch input:focus-visible + .switch-ui {
+  outline: 3px solid rgba(26, 115, 232, 0.26);
+  outline-offset: 2px;
+}
+
+.priority-field {
+  display: grid;
+  gap: 10px;
+}
+
+.priority-field-label {
+  margin-bottom: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.select-shell {
+  position: relative;
+  border-radius: 14px;
+  border: 1px solid rgba(32, 33, 36, 0.1);
+  background: #f7faff;
+}
+
+.select-shell:focus-within {
+  border-color: rgba(26, 115, 232, 0.45);
+  box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.12);
+}
+
+.select-shell select {
+  position: relative;
+  z-index: 1;
+  padding: 14px 42px 14px 14px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-caret {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.priority-helper,
+.priority-note {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.priority-note {
+  padding: 0 4px;
+  font-size: 0.9rem;
 }
 
 .drawer-list {
@@ -496,7 +679,7 @@ blockquote {
 
 .drawer-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 10px;
   margin-top: 16px;
   padding-top: 16px;
@@ -629,6 +812,14 @@ blockquote {
 
   .tab-button {
     min-width: 0;
+  }
+
+  .control-row {
+    grid-template-columns: 1fr;
+  }
+
+  .switch {
+    justify-self: start;
   }
 }
 
