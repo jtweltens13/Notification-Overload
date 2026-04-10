@@ -76,6 +76,8 @@ const state = {
   notifications: [],
   notificationQueue: [],
   toasts: [],
+  missedSummaryItems: [],
+  missedSummaryOpen: false,
   nextId: 1,
   demoStarted: false,
   nextNotificationIndex: 0,
@@ -91,6 +93,7 @@ const state = {
     registrar: true,
     linkedin: true,
     deadlineWindow: 24,
+    summaryFrequency: 60,
   },
 };
 
@@ -128,6 +131,10 @@ const elements = {
   startModal: document.querySelector("#startModal"),
   startDemoButton: document.querySelector("#startDemoButton"),
   toastRegion: document.querySelector("#toastRegion"),
+  missedSummary: document.querySelector("#missedSummary"),
+  missedSummaryCopy: document.querySelector("#missedSummaryCopy"),
+  missedSummaryList: document.querySelector("#missedSummaryList"),
+  clearMissedSummaryButton: document.querySelector("#clearMissedSummaryButton"),
   sessionStatus: document.querySelector("#sessionStatus"),
   paperTitle: document.querySelector("#paperTitle"),
   deadlineToggle: document.querySelector("#deadlineToggle"),
@@ -138,6 +145,7 @@ const elements = {
   registrarToggle: document.querySelector("#registrarToggle"),
   linkedinToggle: document.querySelector("#linkedinToggle"),
   windowSelect: document.querySelector("#windowSelect"),
+  summaryFrequencySelect: document.querySelector("#summaryFrequencySelect"),
   paperDraft: document.querySelector("#paperDraft"),
   tabButtons: Array.from(document.querySelectorAll("[data-tab]")),
   tabPanels: Array.from(document.querySelectorAll("[data-panel]")),
@@ -190,6 +198,7 @@ function bindEvents() {
   });
 
   elements.startDemoButton.addEventListener("click", startDemo);
+  elements.clearMissedSummaryButton.addEventListener("click", clearMissedSummary);
 
   elements.deadlineToggle.addEventListener("change", (event) => {
     state.settings.deadlines = event.target.checked;
@@ -231,6 +240,11 @@ function bindEvents() {
     render();
   });
 
+  elements.summaryFrequencySelect.addEventListener("change", (event) => {
+    state.settings.summaryFrequency = Number(event.target.value);
+    renderControls();
+  });
+
   elements.paperDraft.addEventListener("input", handleDraftInput);
 
   elements.tabButtons.forEach((button) => {
@@ -266,6 +280,8 @@ function startDemo() {
   state.notifications = [];
   state.notificationQueue = buildNotificationQueue();
   state.toasts = [];
+  state.missedSummaryItems = [];
+  state.missedSummaryOpen = false;
   state.nextId = 1;
   state.nextNotificationIndex = 0;
   state.nextTriggerAt = 20;
@@ -329,6 +345,7 @@ function handleDraftInput() {
     state.nextTriggerAt += 20;
   }
 
+  captureMissedSummary();
   render();
 }
 
@@ -405,6 +422,33 @@ function markAsRead(id) {
   render();
 }
 
+function captureMissedSummary() {
+  if (
+    state.missedSummaryItems.length ||
+    state.nextNotificationIndex < state.notificationQueue.length
+  ) {
+    return;
+  }
+
+  const missedItems = state.notifications.filter((item) => !item.important && item.unread);
+  if (!missedItems.length) {
+    return;
+  }
+
+  state.missedSummaryItems = missedItems.map(({ id, title, source, body }) => ({
+    id,
+    title,
+    source,
+    body,
+  }));
+  state.missedSummaryOpen = true;
+}
+
+function clearMissedSummary() {
+  state.missedSummaryOpen = false;
+  renderMissedSummary();
+}
+
 function render() {
   renderTabs();
   renderControls();
@@ -412,6 +456,7 @@ function render() {
   renderInbox();
   renderPriorityPanel();
   renderToasts();
+  renderMissedSummary();
 }
 
 function renderTabs() {
@@ -437,6 +482,7 @@ function renderControls() {
   elements.registrarToggle.checked = state.settings.registrar;
   elements.linkedinToggle.checked = state.settings.linkedin;
   elements.windowSelect.value = String(state.settings.deadlineWindow);
+  elements.summaryFrequencySelect.value = String(state.settings.summaryFrequency);
 }
 
 function renderStatus() {
@@ -522,6 +568,36 @@ function renderToasts() {
               <button data-dismiss-toast="${toast.id}" type="button">Dismiss</button>
             </div>
           </div>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function renderMissedSummary() {
+  const shouldShow = state.missedSummaryOpen && state.missedSummaryItems.length > 0;
+  elements.missedSummary.classList.toggle("hidden", !shouldShow);
+  elements.missedSummary.setAttribute("aria-hidden", shouldShow ? "false" : "true");
+
+  if (!shouldShow) {
+    return;
+  }
+
+  const total = state.missedSummaryItems.length;
+  elements.missedSummaryCopy.textContent = `${total} saved-for-later notification${
+    total === 1 ? " was" : "s were"
+  } still waiting in the inbox after the writing session.`;
+
+  elements.missedSummaryList.innerHTML = state.missedSummaryItems
+    .map(
+      (item) => `
+        <article class="missed-summary-item">
+          <div class="notification-head">
+            <span class="notification-badge batched">Saved for later</span>
+            <span class="notification-meta">${item.source}</span>
+          </div>
+          <h3 class="notification-title">${item.title}</h3>
+          <p>${item.body}</p>
         </article>
       `
     )

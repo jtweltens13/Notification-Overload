@@ -308,6 +308,20 @@ I still need to add examples about NIL debates, television money, conference rea
         <p class="priority-helper">Deadline alerts only break through if they fall inside this window.</p>
       </div>
 
+      <div class="priority-section priority-field">
+        <label class="field-label priority-field-label" for="summaryFrequencySelect">Missed summary timing</label>
+        <div class="select-shell">
+          <select id="summaryFrequencySelect">
+            <option value="30">Every 30 minutes</option>
+            <option value="60" selected>Every 1 hour</option>
+            <option value="120">Every 2 hours</option>
+            <option value="180">Every 3 hours</option>
+          </select>
+          <span class="select-caret" aria-hidden="true">&#9662;</span>
+        </div>
+        <p class="priority-helper">Choose how often missed-notification summaries should appear while you work.</p>
+      </div>
+
       <p class="priority-note">Changes apply immediately to incoming notifications.</p>
     </section>
 
@@ -316,6 +330,29 @@ I still need to add examples about NIL debates, television money, conference rea
         <button id="startDemoButton" class="primary-button" type="button">
           Start Demo
         </button>
+      </div>
+    </section>
+
+    <section class="missed-summary hidden" id="missedSummary" aria-hidden="true">
+      <div class="missed-summary-card">
+        <div class="missed-summary-topbar">
+          <div class="window-controls" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <p class="missed-summary-window-title">Missed Notifications</p>
+        </div>
+        <div class="missed-summary-body">
+          <h2>Missed Notifications</h2>
+          <p class="missed-summary-copy" id="missedSummaryCopy"></p>
+        <div class="missed-summary-list" id="missedSummaryList"></div>
+          <div class="missed-summary-actions">
+            <button id="clearMissedSummaryButton" class="primary-button" type="button">
+              Clear summary
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 

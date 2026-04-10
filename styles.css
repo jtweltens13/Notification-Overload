@@ -740,6 +740,92 @@ blockquote {
   z-index: 30;
 }
 
+.missed-summary {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(680px, calc(100vw - 32px));
+  transform: translate(-50%, -50%);
+  z-index: 35;
+}
+
+.missed-summary.hidden {
+  display: none;
+}
+
+.missed-summary-card {
+  width: 100%;
+  max-height: min(80vh, 760px);
+  overflow: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+}
+
+.missed-summary-topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, #f7f9fc 0%, #edf2f8 100%);
+}
+
+.missed-summary-window-title {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.missed-summary-body {
+  padding: 24px;
+}
+
+.missed-summary-label {
+  margin: 0 0 8px;
+  color: var(--blue);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.missed-summary-card h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.missed-summary-copy {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.missed-summary-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.missed-summary-item {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--panel-soft);
+}
+
+.missed-summary-item p {
+  margin-bottom: 0;
+}
+
+.missed-summary-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .toast {
   padding: 14px;
   border-left: 4px solid var(--blue);
@@ -865,5 +951,13 @@ blockquote {
   .toast-region {
     right: 10px;
     bottom: 10px;
+  }
+
+  .missed-summary-card {
+    max-height: calc(100vh - 24px);
+  }
+
+  .missed-summary-body {
+    padding: 20px;
   }
 }
